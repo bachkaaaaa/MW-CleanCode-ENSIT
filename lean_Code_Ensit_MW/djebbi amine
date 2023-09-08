@@ -1,91 +1,112 @@
-//Q1:
-function isValueInRange(value: number, lower: number, upper: number): boolean {
-  return lower <= value && value <= upper;
+/Q1: With this function we want to check if a1 is higher than a2 and less than a3 (No meaningful variables)
+function isValueInTheRange(value: Number, InferiorBorn: Number, SuperiorBorn: Number): boolean {
+  return InferiorBorn <= value && value <= SuperiorBorn;
 }
 
-// Q2: 
-type Student = {
-  studentName: string;
-  studentClass: string;
+
+//Q2: We want to have student type with some information. (If it's not pronounceable how you will say it)
+type student = {
+  studentName: String;
+  studentClass: String;
   studentId: number;
-};
-
-// Q3: 
-function getUserData(): void {
-  
 }
 
-// Q4: 
-function isGradeBelowMax(grade: number): boolean {
-  return grade <= 100; // Assuming the maximum grade is 100 for the USA
+
+//Q3: What we should call our function that return User?
+//Answer : The best practice of the getters and setters is to put the verb+the class in the camel case so it's getUser();
+getUserData();
+getUser(); <-
+getUserInformation();
+
+
+//Q4: We want to check if that our student yearly grade is acceptable for any country Education System (in Tunisia <20, in USA 100)
+isGradeBelowMax(grade)
+
+
+//Q5: I know you got the idea of variable names but I want it to be clear for anyone around the world.
+Student student = new Student();
+Grade grade = new Grade();
+Professor professor = new Professor();
+
+
+//Q6: Don't you think we are overdoing it???
+//Answer: For me no, because later in the code is better to find StudentId that references to a student than an id that can refers to any object
+//example we have a student named yasmin so if we don't difference in the attribute, we can have conflict between the person and the flower
+Type Student {
+    studentFirstName: String;
+    studentLastName: String;
+    StudentId: Number;
 }
 
-// Q5: 
-const studentInstance = new Student();
-const gradeInstance = new Grade();
-const professorInstance = new Professor();
 
-// Q6: 
-type StudentInfo = {
-  firstName: string;
-  lastName: string;
-  studentId: number;
-};
+//Q7: What we can do to avoid giving unappropriat gender value? (Hint enum)
 
-// Q7:
-enum Gender {
-  Male = "Male",
-  Female = "Female",
+Enum Sexe {
+    "Male",
+    "Female"
 }
 
-type StudentWithGender = {
-  firstName: string;
-  lastName: string;
-  id: number;
-  gender: Gender;
-};
-
-function displayStudentName(student: StudentWithGender): void {
-  switch (student.gender) {
-    case Gender.Male:
-      console.log(`Mr. ${student.firstName} ${student.lastName}`);
-      break;
-    case Gender.Female:
-      console.log(`Mrs. ${student.firstName} ${student.lastName}`);
-      break;
-    default:
-      console.log("ERROR 404");
-  }
+Type Student {
+    firstName: String;
+    lastName: String;
+    id: Number;
+    //gender: Boolean;
+    gender: Sexe;
 }
 
-// Q8:
-function displayUserDetails(student: Student, department: string, university: string): void {
-  
+
+function displayStudentName(student: Student){
+    switch (student.gender) {
+        case "Male":
+            console.log("Mr." + student.firstName + " " + student.lastName);
+            break;
+        case "Female":
+            console.log("Mrs." + student.firstName + " " + student.lastName);
+            break;
+        Default:
+            console.log("ERROR 404");
+        }
 }
 
-// Q9: 
-function displayUserDetails(student: Student, department: string, university: string): void {
-  
+
+
+//Q8: Is it good idea to display all these arguments in one line like this?
+//Answer: no it's hard to detect all of them
+displayUserDetails(student: Student, department: String, university: String){
+// Some logic happens here
 }
 
-// Q10:
+
+
+//Q9: Is it good idea to give all these arguments to one function?
+//Answer: I guess it's the same previous question
+displayUserDetails(student: Student, department: String, university: String){
+}
+
+
+
+//Q10: Who wants to have a function that do multiple things with multiple comments?
 const MINIMUM_GRADE_TO_PASS = 10;
 
-function displaySuspendedMessage(student: Student): void {
-  const genderTitle = student.gender === Gender.Male ? "Mr." : "Mrs.";
-  console.log(`Sorry ${genderTitle} ${student.studentName}, you are suspended.`);
+function displaySuspendedMessage(student: Student):void {
+    console.log(
+              student.gender === Gender.Male
+                ? `Sorry Mr. ${student.name}, you are suspended.`
+                : `Sorry Mrs. ${student.name}, you are suspended.`
+            );
 }
 
-function evaluateStudents(studentsList: Student[]): Student[] {
-  const passedStudents: Student[] = [];
+function evaluateStudents(studentsList) {
+  let passedStudents = [];
 
   studentsList.forEach((student) => {
-    if (student.studentId >= MINIMUM_GRADE_TO_PASS) {
+    if (student.score >= MINIMUM_GRADE_TO_PASS) {
       passedStudents.push(student);
     } else {
-      if (!student.failedBefore) {
-        student.failedBefore = true;
+      if (student.failedBefore) {
         displaySuspendedMessage(student);
+      } else {
+          student.failedBefore = true;
       }
     }
   });
