@@ -1,0 +1,94 @@
+//Q1:
+function isValueInRange(value: number, lower: number, upper: number): boolean {
+  return lower <= value && value <= upper;
+}
+
+// Q2: 
+type Student = {
+  studentName: string;
+  studentClass: string;
+  studentId: number;
+};
+
+// Q3: 
+function getUserData(): void {
+  
+}
+
+// Q4: 
+function isGradeBelowMax(grade: number): boolean {
+  return grade <= 100; // Assuming the maximum grade is 100 for the USA
+}
+
+// Q5: 
+const studentInstance = new Student();
+const gradeInstance = new Grade();
+const professorInstance = new Professor();
+
+// Q6: 
+type StudentInfo = {
+  firstName: string;
+  lastName: string;
+  studentId: number;
+};
+
+// Q7:
+enum Gender {
+  Male = "Male",
+  Female = "Female",
+}
+
+type StudentWithGender = {
+  firstName: string;
+  lastName: string;
+  id: number;
+  gender: Gender;
+};
+
+function displayStudentName(student: StudentWithGender): void {
+  switch (student.gender) {
+    case Gender.Male:
+      console.log(`Mr. ${student.firstName} ${student.lastName}`);
+      break;
+    case Gender.Female:
+      console.log(`Mrs. ${student.firstName} ${student.lastName}`);
+      break;
+    default:
+      console.log("ERROR 404");
+  }
+}
+
+// Q8:
+function displayUserDetails(student: Student, department: string, university: string): void {
+  
+}
+
+// Q9: 
+function displayUserDetails(student: Student, department: string, university: string): void {
+  
+}
+
+// Q10:
+const MINIMUM_GRADE_TO_PASS = 10;
+
+function displaySuspendedMessage(student: Student): void {
+  const genderTitle = student.gender === Gender.Male ? "Mr." : "Mrs.";
+  console.log(`Sorry ${genderTitle} ${student.studentName}, you are suspended.`);
+}
+
+function evaluateStudents(studentsList: Student[]): Student[] {
+  const passedStudents: Student[] = [];
+
+  studentsList.forEach((student) => {
+    if (student.studentId >= MINIMUM_GRADE_TO_PASS) {
+      passedStudents.push(student);
+    } else {
+      if (!student.failedBefore) {
+        student.failedBefore = true;
+        displaySuspendedMessage(student);
+      }
+    }
+  });
+
+  return passedStudents;
+}
